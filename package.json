@@ -1,5 +1,5 @@
 {
-  "name": "vue-h5-template",
+  "name": "vue-small-game",
   "version": "2.0.0",
   "description": "A vue h5 template with Vant UI",
   "author": "Sunnie <sunniejs@163.com>",
@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "element-ui": "^2.13.2",
     "lib-flexible": "^0.3.2",
     "lodash": "^4.17.15",
     "regenerator-runtime": "^0.13.5",

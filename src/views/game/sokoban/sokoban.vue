@@ -2,8 +2,8 @@
   <!--  推箱子小游戏，规格如下-->
   <!--  0表示墙内空地, 1表示箱子，2表示终点，3表示箱子&&终点，10表示人，98表示墙，99表示墙外空地-->
   <div class="container">
-    <div v-for="(item, index) in mapArray" :key="index">
-      <div v-for="(array, temp) in item" :key="temp" style="display: inline">
+    <div v-for="(item, index) in mapArray" :key="index" class="row">
+      <div v-for="(array, temp) in item" :key="temp" class="image-box">
         <img :src="mapElementName[array].icon" class="map-image" />
       </div>
     </div>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Sokoban',
   computed: {
@@ -19,71 +20,29 @@ export default {
     },
     maxColumn: function() {
       return this.mapArray[0].length
-    }
+    },
+    ...mapGetters('sokoban', ['mapElementName', 'systemMapArray', 'userMapArray'])
   },
   data() {
     return {
       manPosition: [0, 0], // 记录当前人所在的位置
-      // 地图数组
-      mapArray: [
-        [99, 99, 99, 98, 98, 98, 98, 98, 98, 99],
-        [99, 98, 98, 98, 0, 0, 0, 0, 98, 99],
-        [98, 98, 2, 0, 1, 98, 98, 0, 98, 98],
-        [98, 2, 2, 1, 0, 1, 0, 0, 10, 98],
-        [98, 2, 2, 0, 1, 0, 1, 0, 98, 98],
-        [98, 98, 98, 98, 98, 98, 0, 0, 98, 99],
-        [99, 99, 99, 99, 99, 98, 98, 98, 98, 99]
-      ],
-      // 相关的地图元素命名
-      mapElementName: {
-        0: {
-          name: '墙内空地',
-          icon: require('@/assets/image/墙内空地.png'),
-          type: 'move' // 可移动类型，表示任何情况下可以移动
-        },
-        1: {
-          name: '箱子',
-          icon: require('@/assets/image/箱子.png'),
-          type: 'MF' // move&&fix,表示不确定类型，可移动或者是不可移动
-        },
-        2: {
-          name: '终点',
-          icon: require('@/assets/image/终点.png'),
-          type: 'move'
-        },
-        3: {
-          name: '箱子&&终点',
-          icon: require('@/assets/image/箱子&&终点.png'),
-          type: 'MF'
-        },
-        10: {
-          name: '人',
-          icon: require('@/assets/image/人.png'),
-          type: 'fix'
-        },
-        12: {
-          name: '人',
-          icon: require('@/assets/image/人.png'),
-          type: 'fix'
-        },
-        98: {
-          name: '墙',
-          icon: require('@/assets/image/墙.png'),
-          type: 'fix'
-        },
-        99: {
-          name: '墙外空地',
-          icon: require('@/assets/image/墙外空地.png'),
-          type: 'move'
-        }
-      }
+      // // 地图数组
+      mapArray: null
+      // // 相关的地图元素命名
+      // mapElementName: null
     }
   },
   created() {
     // 获取仓库中的地图数组
-    // this.mapArray = this.$store.state.mapArra
+    // this.mapElementName = this.$store.sokoban.mapElementName
     //  监听鼠标点击上下左右键
     document.addEventListener('keydown', this.handleKeyDown)
+    if (this.userMapArray.length !== 0) {
+      //  使用用户自定义的地图
+      this.mapArray = this.userMapArray
+    } else {
+      this.mapArray = this.systemMapArray
+    }
   },
   methods: {
     // 监听键盘事件
@@ -91,13 +50,14 @@ export default {
       // 循环判断当前的人所处的位置
       this.mapArray.forEach((item, index) => {
         item.forEach((array, temp) => {
-          if (array === 10 || array === 12) {
+          if (this.mapElementName[array].name === '人') {
             this.manPosition = [index, temp]
           }
         })
       })
       //  判断点击的键盘
       // 传递的参数：人所在的位置， 人要移动到的位置的相关元素信息以及下一个信息
+      console.log('输出当前点击的位置', this.mapElementName)
       const man = this.manPosition
       const array = this.mapArray
       const name = this.mapElementName
@@ -233,6 +193,7 @@ export default {
       }
       //  3.人的上边是空地或者是终点
       if (next.type === 'move') {
+        console.log('输出数据', this.manPosition)
         //  人的位置减去10， 右边位置加上10
         this.mapArray[this.manPosition[0]][this.manPosition[1]] -= 10
         this.mapArray[this.manPosition[0]][this.manPosition[1] + 1] += 10
@@ -261,7 +222,15 @@ export default {
   white-space: nowrap;
 }
 .map-image {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  height: 35px;
+}
+.map-box {
+  height: 100%;
 }
 </style>
