@@ -7,6 +7,7 @@
         <img :src="mapElementName[array].icon" class="map-image" />
       </div>
     </div>
+    <button class="btn" @click="resetGame">重新开始</button>
   </div>
 </template>
 
@@ -37,12 +38,7 @@ export default {
     // this.mapElementName = this.$store.sokoban.mapElementName
     //  监听鼠标点击上下左右键
     document.addEventListener('keydown', this.handleKeyDown)
-    if (this.userMapArray.length !== 0) {
-      //  使用用户自定义的地图
-      this.mapArray = this.userMapArray
-    } else {
-      this.mapArray = this.systemMapArray
-    }
+    this.resetGame()
   },
   methods: {
     // 监听键盘事件
@@ -202,6 +198,17 @@ export default {
       this.$forceUpdate()
     },
 
+    // 点击重新开始
+    resetGame() {
+      console.log('输出数据', this.userMapArray, this.mapArray, this.systemMapArray)
+      if (this.userMapArray.length !== 0) {
+        //  使用用户自定义的地图
+        this.mapArray = JSON.parse(JSON.stringify(this.userMapArray))
+      } else {
+        this.mapArray = JSON.parse(JSON.stringify(this.systemMapArray))
+      }
+    },
+
     //  叠加guize
     goodAdd(index, temp) {
       if (index === 6) {
@@ -229,6 +236,9 @@ export default {
   display: flex;
   flex-direction: row;
   height: 35px;
+}
+.btn {
+  margin-top: 20px;
 }
 .map-box {
   height: 100%;
