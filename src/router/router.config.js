@@ -27,5 +27,15 @@ export const constantRouterMap = [
     path: '/sokobanDIY',
     name: 'SokobanDIY',
     component: () => import('@/views/game/sokoban/diy')
+  },
+  {
+    path: '/greedySnake',
+    name: 'greedySnake',
+    component: () => import('@/views/game/greedySnake/index')
+  },
+  {
+    path: '/playGreedySnake',
+    name: 'playGreedySnake',
+    component: () => import('@/views/game/greedySnake/play')
   }
 ]
