@@ -10,13 +10,10 @@
         @change="changeIndex"
       >
         <el-carousel-item v-for="(item, index) in gameList" :key="index">
-          <el-image
-            :src="item.cover"
-            fit="fill"
-            class="game-bg"
-            :title="item.name"
-            @click="playGame(index, item.link)"
-          />
+          <div class="game-box" @click="playGame(index, item.link)">
+            <el-image :src="item.cover" fit="fill" class="game-bg" :title="item.name" />
+            <div class="name">{{ item.name }}</div>
+          </div>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -60,7 +57,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .app-container {
   position: absolute;
   height: 100%;
@@ -93,8 +90,30 @@ export default {
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
 }
-.game-bg {
-  width: 100%;
-  height: 100%;
+
+.game-box {
+  .game-bg {
+    width: 100%;
+    height: 100%;
+  }
+  .name {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin-top: -25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    font-size: 30px;
+    font-style: italic;
+    z-index: 10;
+  }
 }
 </style>
