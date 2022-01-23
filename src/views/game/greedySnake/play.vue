@@ -34,7 +34,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('greedySnake', ['mapSize', 'food', 'snakeHead', 'snakeBody']),
+    ...mapState('greedySnake', ['mapSize', 'food', 'snakeHead', 'snakeBody'])
     // food: {
     //   get() {
     //     reutrn this.$store.greedySnake.state.food
@@ -80,7 +80,7 @@ export default {
       this.timer = setInterval(() => {
         // 蛇移动
         this.snakeMove(this.snakeHead.direction)
-      }, 100)
+      }, 30)
     },
 
     // 获取所有可生成食物的点的坐标
@@ -184,7 +184,7 @@ export default {
     },
 
     //  蛇吃到食物
-     snakeEat() {
+    snakeEat() {
       //  计算分数，根据食物的不同计算
       //  暂时先不实现
       this.snakeBody.unshift({

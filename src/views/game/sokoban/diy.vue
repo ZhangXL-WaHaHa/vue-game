@@ -84,7 +84,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('sokoban', ['mapElementName', 'mapName', 'mapSize', 'mapElementArray', 'userMapArray']),
+    ...mapGetters('sokoban', ['mapElementName', 'mapName', 'mapSize', 'mapElementArray', 'userMapArray'])
   },
   created() {
     const that = this

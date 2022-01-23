@@ -20,13 +20,13 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  button {
-    display: block;
-  }
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+button {
+  display: block;
+}
 </style>
