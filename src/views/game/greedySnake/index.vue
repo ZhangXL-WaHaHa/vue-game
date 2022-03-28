@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <router-link to="playGreedySnake">
-      <button>准备开始游戏了吗</button>
+      <button>开始游戏</button>
     </router-link>
   </div>
 </template>
